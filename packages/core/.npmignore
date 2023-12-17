@@ -1,6 +1,7 @@
 .*
 *.tgz
+*.spec.ts
 samples
 !dist
 tsconfig.json
-__snapshots__
+__snapshots_
