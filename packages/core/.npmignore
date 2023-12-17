@@ -1,0 +1,6 @@
+.*
+*.tgz
+samples
+!dist
+tsconfig.json
+__snapshots__
