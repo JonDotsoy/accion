@@ -1,9 +1,0 @@
-.*
-*.tgz
-*.spec.ts
-samples
-src
-!dist
-!types
-tsconfig.json
-__snapshots_

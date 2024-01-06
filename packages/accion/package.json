@@ -1,7 +1,7 @@
 {
   "name": "accion",
   "description": "Streamline script execution with a versatile module: execute JS or shell scripts as 'jobs,' manage dependencies, and monitor progress effortlessly",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "module": "./dist/job.js",
   "type": "module",
   "license": "MIT",
@@ -34,14 +34,12 @@
   },
   "scripts": {
     "prepack": "npm run build",
-    "build": "bun build src/job.ts src/manager.ts src/expose.ts --target node --outdir src"
+    "build": "bun scripts/build.ts"
   },
   "files": [
-    "dist",
-    "types"
+    "src"
   ],
   "dependencies": {
-    "@accions/common": "^0.1.5",
-    "json5": "^2.2.3"
+    "@accions/common": "^0.1.5"
   }
 }

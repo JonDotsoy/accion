@@ -1,8 +1,8 @@
 import { test, expect } from "bun:test"
-import { job } from "./job.ts"
-import { Manager, State } from "./manager.ts"
-import { JobContext } from "./interfaces/job.ts"
-import { StorageService } from "./interfaces/storage-service.ts"
+import { job } from "../src/job.ts"
+import { Manager, State } from "../src/manager.ts"
+import { JobContext } from "../src/interfaces/job.ts"
+import { StorageService } from "../src/interfaces/storage-service.ts"
 
 test('priority plan', () => {
     const job1 = job("1", () => 1)

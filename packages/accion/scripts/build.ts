@@ -1,7 +1,12 @@
 import { relative } from "path"
 import { pathToFileURL } from "url"
 import * as ts from "typescript"
-import * as JSON5 from "json5"
+
+const entrypoints = [
+    new URL("../src/job.ts", import.meta.url).pathname,
+    new URL("../src/manager.ts", import.meta.url).pathname,
+    new URL("../src/expose.ts", import.meta.url).pathname,
+]
 
 const tsconfigLocation = new URL("../tsconfig.types.json", import.meta.url).pathname;
 
@@ -13,18 +18,16 @@ const relativeUrl = (url: URL) => {
     return e(relative(new URL("../", import.meta.url).pathname, url.pathname))
 }
 
-const entrypoints = [
-    new URL("../src/job.ts", import.meta.url).pathname,
-    new URL("../src/manager.ts", import.meta.url).pathname,
-    new URL("../src/expose.ts", import.meta.url).pathname,
-]
 
 const reports = await Bun.build({
     entrypoints,
     outdir: new URL("../src/", import.meta.url).pathname,
     target: 'node',
     format: 'esm',
-    // sourcemap: "inline",
+    splitting: true,
+    external: [
+        "@accions/common"
+    ]
 })
 
 reports.outputs.forEach(output => console.log(`${output.hash} ${relativeUrl(pathToFileURL(output.path))} ${output.size}b`))

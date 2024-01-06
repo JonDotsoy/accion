@@ -1,7 +1,7 @@
 import { test, afterAll, expect, beforeAll } from "bun:test"
-import { Expose } from "./expose.ts"
-import { job } from "./job.ts"
-import { Manager } from "./manager.ts"
+import { Expose } from "../src/expose.ts"
+import { job } from "../src/job.ts"
+import { Manager } from "../src/manager.ts"
 
 const ends = new Set<() => Promise<void> | void>()
 
