@@ -1,7 +1,7 @@
 {
   "name": "accion",
   "description": "Streamline script execution with a versatile module: execute JS or shell scripts as 'jobs,' manage dependencies, and monitor progress effortlessly",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "module": "./dist/job.js",
   "type": "module",
   "license": "MIT",
@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "bun-types": "^1.0.18",
+    "glob": "^10.3.10",
     "yaml": "^2.3.4"
   },
   "peerDependencies": {
