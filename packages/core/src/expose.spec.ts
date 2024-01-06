@@ -1,7 +1,7 @@
 import { test, afterAll, expect, beforeAll } from "bun:test"
-import { Expose } from "./expose"
-import { job } from "./job"
-import { Manager } from "./manager"
+import { Expose } from "./expose.ts"
+import { job } from "./job.ts"
+import { Manager } from "./manager.ts"
 
 const ends = new Set<() => Promise<void> | void>()
 
@@ -42,7 +42,7 @@ test('expect 404 response', async () => {
 test('expect status response', async () => {
     const res = await fetch(makeURL("/status"))
     expect(res.status).toEqual(200)
-    expect(await res.json<any>()).toEqual({
+    expect(await res.json()).toEqual({
         ok: true,
         manager: {
             indexes: ["1", "2", "3"],
@@ -72,5 +72,6 @@ test("init local service", async function () {
 
 test("calling a job", async () => {
     expect((await fetch(makeURL('/job/1/run'), { method: 'POST' })).status).toEqual(201)
-    expect((await (await fetch(makeURL('/status'))).json<any>())?.manager?.jobStates?.['1']?.state).toEqual("success")
+    const res: any = await (await fetch(makeURL('/status'))).json()
+    expect(res?.manager?.jobStates?.['1']?.state).toEqual("success")
 })

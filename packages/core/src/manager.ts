@@ -1,5 +1,5 @@
-import type { JobContext } from "./interfaces/job";
-import { StorageService } from "./interfaces/storage-service";
+import type { JobContext } from "./interfaces/job.ts";
+import type { StorageService } from "./interfaces/storage-service.ts";
 
 export enum State {
     Success = 'success'

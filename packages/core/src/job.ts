@@ -1,4 +1,4 @@
-import type { JobContext, JobReturn, JobArgs, JobCb } from "./interfaces/job"
+import type { JobContext, JobReturn, JobArgs, JobCb } from "./interfaces/job.ts"
 
 const isCb = (value: unknown): value is (() => JobCb<any>) => typeof value === 'function'
 

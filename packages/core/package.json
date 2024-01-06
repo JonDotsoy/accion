@@ -1,37 +1,47 @@
 {
   "name": "accion",
   "description": "Streamline script execution with a versatile module: execute JS or shell scripts as 'jobs,' manage dependencies, and monitor progress effortlessly",
-  "version": "v0.1.4",
+  "version": "0.1.12",
   "module": "./dist/job.js",
   "type": "module",
   "license": "MIT",
+  "main": "./dist/job.js",
+  "types": "./dist/job.d.ts",
   "exports": {
     ".": {
       "import": "./dist/job.js",
-      "types": "./src/job.ts"
+      "types": "./types/job.d.ts"
     },
     "./job": {
       "import": "./dist/job.js",
-      "types": "./src/job.ts"
+      "types": "./types/job.d.ts"
     },
     "./expose": {
       "import": "./dist/expose.js",
-      "types": "./src/expose.ts"
+      "types": "./types/expose.d.ts"
     },
     "./manager": {
       "import": "./dist/manager.js",
-      "types": "./src/manager.ts"
+      "types": "./types/manager.d.ts"
     }
   },
-  "devDependencies": { "bun-types": "^1.0.18" },
+  "devDependencies": {
+    "bun-types": "^1.0.18",
+    "yaml": "^2.3.4"
+  },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "scripts": {
     "prepack": "npm run build",
-    "build": "bun build src/job.ts src/manager.ts src/expose.ts --target node --outdir dist"
+    "build": "bun build src/job.ts src/manager.ts src/expose.ts --target node --outdir src"
   },
+  "files": [
+    "dist",
+    "types"
+  ],
   "dependencies": {
-    "debug": "^4.3.4"
+    "@accions/common": "^0.1.5",
+    "json5": "^2.2.3"
   }
 }

@@ -1,7 +1,8 @@
 {
-  "name": "cli",
-  "module": "index.ts",
+  "name": "action-cli",
+  "version": "v0.1.0",
   "type": "module",
+  "bin": "./dist/bin.js",
   "devDependencies": {
     "bun-types": "latest"
   },
@@ -9,6 +10,10 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
+    "prepack": "npm run build",
     "build": "bun build src/bin.ts --outdir dist --target node"
+  },
+  "dependencies": {
+    "@jondotsoy/flags": "^2.0.2"
   }
 }

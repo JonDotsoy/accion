@@ -1,4 +1,4 @@
-import { Arg } from "./arg"
+import type { Arg } from "./arg.ts"
 
 export type JobOptions<I extends Record<string, JobContext<any>>> = {
     id?: string

@@ -4,6 +4,12 @@ accion "Another Continuous Integration and Continuous Delivery (CI/CD)"
 
 ## Understanding accion
 
+## API
+
+### Manager Jobs
+
+API provide a general control to orchestrate the jobs
+
 ### workflow file
 
 Ideas:

@@ -1,0 +1,5 @@
+*.spec.*
+*.tgz
+tsconfig.*
+*.tsbuildinfo
+.npmignore

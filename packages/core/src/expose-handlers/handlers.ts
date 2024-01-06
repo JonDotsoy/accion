@@ -1,4 +1,4 @@
-import { Manager, State } from "../manager";
+import { Manager, State } from "../manager.ts";
 
 export const status = (manager: Manager) => {
     return new Response(JSON.stringify({
