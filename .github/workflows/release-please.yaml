@@ -1,0 +1,19 @@
+on:
+    push:
+        branches: develop
+        paths: /packages/accion
+
+permissions: 
+    contents: write
+    pull-requests: write
+
+name: Release please Accion
+
+jobs:
+    release-please:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: google-github-actions/release-please-action@v4
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  release-type: node
