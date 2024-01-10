@@ -30,11 +30,19 @@ jobs:
         if: needs.release-please.outputs.release_created
         steps:
             - uses: actions/checkout@v4
-              with:
-                path: packages/accion
             - uses: actions/setup-node@v4
               with:
                   node-version: 20
-                  token: ${{ secrets.NPM_TOKEN }}
-            - run: npm ci
+                  always-auth: true
+                  registry-url: https://registry.npmjs.org
+            - uses: oven-sh/setup-bun@v1
+              with:
+                bun-version: latest
+            - run: bun install
+              working-directory: packages/accion
+              env:
+                NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
             - run: npm publish
+              working-directory: packages/accion
+              env:
+                NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
