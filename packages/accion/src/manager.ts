@@ -1,8 +1,13 @@
+export type { JobContext } from "./interfaces/job.ts";
+export type { StorageService } from "./interfaces/storage-service.ts";
 import type { JobContext } from "./interfaces/job.ts";
 import type { StorageService } from "./interfaces/storage-service.ts";
 
 export enum State {
-    Success = 'success'
+    Success = 'success',
+    Running = 'running',
+    Failed = 'failed',
+    Pending = 'pending',
 }
 
 type JobState = {
@@ -127,15 +132,22 @@ export class Manager {
             if (!await this.storageService.has(jobInput.id)) throw new Error(`this job need run ${key}`)
             args[key] = await this.storageService.get(jobInput.id)
         }
-        const res = await job.cb(args)
-        await this.storageService.set(job.id, res)
-        return res
+        await this.updateState(job, State.Running)
+        try {
+            const res = await job.cb(args)
+            await this.updateState(job, State.Success)
+            await this.storageService.set(job.id, res)
+            return res
+        } catch (ex) {
+            await this.updateState(job, State.Failed)
+            throw ex
+        }
     }
 
     *nextJobs(): Generator<JobContext<any>> {
         for (const job of this.jobs) {
             const parents = this.parentOfJob(job)
-            if (this.stateOfJob(job)?.state !== State.Success && Array.from(parents).every(parent => this.stateOfJob(parent)?.state === "success")) {
+            if (this.stateOfJob(job)?.state !== State.Success && Array.from(parents).every(parent => this.stateOfJob(parent)?.state === State.Success)) {
                 yield job
             }
         }
@@ -182,23 +194,25 @@ export class Manager {
     }
 
     toFlowchart(options?: {
-        linkString: (jobLeft: JobContext<any>, jobRight: JobContext<any>, manager: Manager) => string,
-        jobLabel: (indexJob: string, job: JobContext<any>, manager: Manager) => string,
+        formatNodeId?: (indexJob: string, job: JobContext<any>, manager: Manager) => string,
+        formatLinkBetweenNodes?: (jobLeft: JobContext<any>, jobRight: JobContext<any>, manager: Manager) => string,
+        formatNodeLabel?: (nodeId: string, job: JobContext<any>, manager: Manager) => string,
     }) {
-        const linkString = options?.linkString ?? (() => `-->`)
-        const jobLabel = options?.jobLabel ?? ((indexJob: string) => `${indexJob}`)
+        const formatNodeId = options?.formatNodeId ?? ((nodeId) => nodeId.replace(/\W/g, '_'))
+        const formatLinkBetweenNodes = options?.formatLinkBetweenNodes ?? (() => `-->`)
+        const formatNodeLabel = options?.formatNodeLabel ?? ((nodeId, job) => `${nodeId}`)
 
         return `flowchart LR\n` +
             '\n' +
-            Array.from(this.jobs).map((job) => `${jobLabel(this.indexOfJob(job), job, this)}\n`).join('') +
+            Array.from(this.jobs).map((job) => `${formatNodeLabel(formatNodeId(this.indexOfJob(job), job, this), job, this)}\n`).join('') +
             '\n' +
             Array.from(this.jobs).map((job) => {
                 return Array.from(this.childrenOfJob(job)).map((child) => {
-                    const idJobLeft: string = this.indexOfJob(job)
-                    const idJobRight: string = this.indexOfJob(child)
+                    const idJobLeft: string = formatNodeId(this.indexOfJob(job), job, this)
+                    const idJobRight: string = formatNodeId(this.indexOfJob(child), child, this)
                     const jobLeft: JobContext<any> = job
                     const jobRight: JobContext<any> = child
-                    return `${idJobLeft} ${linkString(jobLeft, jobRight, this)} ${idJobRight}\n`;
+                    return `${idJobLeft} ${formatLinkBetweenNodes(jobLeft, jobRight, this)} ${idJobRight}\n`;
                 }).join('')
             }).join('')
     }

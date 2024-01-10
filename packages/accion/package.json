@@ -1,28 +1,40 @@
 {
   "name": "accion",
   "description": "Streamline script execution with a versatile module: execute JS or shell scripts as 'jobs,' manage dependencies, and monitor progress effortlessly",
-  "version": "0.1.14",
-  "module": "./dist/job.js",
+  "version": "0.1.21",
   "type": "module",
   "license": "MIT",
-  "main": "./dist/job.js",
-  "types": "./dist/job.d.ts",
+  "main": "./src/job.js",
+  "module": "./src/job.js",
+  "types": "./src/job.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/job.js",
-      "types": "./types/job.d.ts"
+      "import": "./src/job.js",
+      "types": "./src/job.d.ts"
     },
     "./job": {
-      "import": "./dist/job.js",
-      "types": "./types/job.d.ts"
+      "import": "./src/job.js",
+      "types": "./src/job.d.ts"
+    },
+    "./src/job": {
+      "import": "./src/job.js",
+      "types": "./src/job.d.ts"
     },
     "./expose": {
-      "import": "./dist/expose.js",
-      "types": "./types/expose.d.ts"
+      "import": "./src/expose.js",
+      "types": "./src/expose.d.ts"
+    },
+    "./src/expose": {
+      "import": "./src/expose.js",
+      "types": "./src/expose.d.ts"
     },
     "./manager": {
-      "import": "./dist/manager.js",
-      "types": "./types/manager.d.ts"
+      "import": "./src/manager.js",
+      "types": "./src/manager.d.ts"
+    },
+    "./src/manager": {
+      "import": "./src/manager.js",
+      "types": "./src/manager.d.ts"
     }
   },
   "devDependencies": {

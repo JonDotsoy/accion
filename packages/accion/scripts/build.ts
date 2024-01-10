@@ -3,7 +3,6 @@ import { pathToFileURL } from "url"
 import * as ts from "typescript"
 import { glob } from "glob"
 
-
 const entrypoints = [
     new URL("../src/job.ts", import.meta.url).pathname,
     new URL("../src/manager.ts", import.meta.url).pathname,
@@ -26,18 +25,16 @@ const relativeUrl = (url: URL) => {
     return e(relative(new URL("../", import.meta.url).pathname, url.pathname))
 }
 
-const reports = await Bun.build({
-    entrypoints,
-    outdir: new URL("../src/", import.meta.url).pathname,
-    target: 'node',
-    format: 'esm',
-    splitting: true,
-    external: [
-        "@accions/common"
-    ]
-})
+for (const entrypoint of entrypoints) {
+    const reports = await Bun.build({
+        entrypoints: [entrypoint],
+        outdir: new URL("../src/", import.meta.url).pathname,
+        target: 'node',
+        format: 'esm',
+    })
 
-reports.outputs.forEach(output => console.log(`${output.hash} ${relativeUrl(pathToFileURL(output.path))} ${output.size}b`))
+    reports.outputs.forEach(output => console.log(`${output.hash} ${relativeUrl(pathToFileURL(output.path))} ${output.size}b`))
+}
 
 const program = ts.createProgram(entrypointsTs, tsconfig)
 

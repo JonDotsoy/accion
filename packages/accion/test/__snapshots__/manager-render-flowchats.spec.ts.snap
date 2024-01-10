@@ -1,0 +1,40 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render flowcharts 1`] = `
+"flowchart LR
+
+job1
+job2
+job3
+
+job1 --> job2
+job1 --> job3
+job2 --> job3
+"
+`;
+
+exports[`render flowcharts and format the node id 1`] = `
+"flowchart LR
+
+__job1__
+__job2__
+__job3__
+
+__job1__ --> __job2__
+__job1__ --> __job3__
+__job2__ --> __job3__
+"
+`;
+
+exports[`render flowcharts and format the node label 1`] = `
+"flowchart LR
+
+job_1["✅ job 1"]
+job__2["⚙️ job #34;2"]
+job_3["🟡 job 3"]
+
+job_1 --> job__2
+job_1 --> job_3
+job__2 --> job_3
+"
+`;

@@ -86,11 +86,4 @@ test("create elements", () => {
             new Identifier("biz"),
         )
     ).toString()).toEqual(`foo.biz`)
-
-    expect((
-        new MemberExpression(
-            new Identifier("foo"),
-            new Identifier("biz"),
-        )
-    ).toString()).toEqual(`foo.biz(1, 2)`)
 })
