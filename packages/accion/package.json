@@ -1,7 +1,7 @@
 {
   "name": "accion",
   "description": "Streamline script execution with a versatile module: execute JS or shell scripts as 'jobs,' manage dependencies, and monitor progress effortlessly",
-  "version": "0.1.31",
+  "version": "0.2.0",
   "type": "module",
   "license": "MIT",
   "main": "./src/job.js",
