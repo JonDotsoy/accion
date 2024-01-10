@@ -11,7 +11,7 @@
   "files": [
     "./src"
   ],
-  "version": "0.1.7",
+  "version": "0.1.9",
   "scripts": {
     "prepublish": "npm run build:ts",
     "build": "npm run build:ts && npm run build:index && npm run build:debug && npm run build:promise-with-resolvers",

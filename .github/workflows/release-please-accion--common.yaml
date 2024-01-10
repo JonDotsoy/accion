@@ -1,13 +1,15 @@
 on:
     push:
-        branches: develop
-        paths: /packages/accion
+        branches: 
+            - develop
+        paths: 
+            - packages/accion-common/**
 
 permissions: 
     contents: write
     pull-requests: write
 
-name: Release please Accion
+name: Release please Accion Common
 
 jobs:
     release-please:
@@ -17,3 +19,5 @@ jobs:
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
                   release-type: node
+                  path: packages/accion-common
+                  include-component-in-tag: true
