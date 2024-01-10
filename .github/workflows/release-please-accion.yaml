@@ -14,10 +14,27 @@ name: Release please Accion
 jobs:
     release-please:
         runs-on: ubuntu-latest
+        outputs:
+            release_created: ${{ steps.release.outputs.release_created }}
         steps:
             - uses: google-github-actions/release-please-action@v4
+              id: release
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
                   release-type: node
                   path: packages/accion
                   include-component-in-tag: true
+    publish:
+        runs-on: ubuntu-latest
+        needs: release-please
+        if: needs.release-please.outputs.release_created
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                path: packages/accion
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  token: ${{ secrets.NPM_TOKEN }}
+            - run: npm ci
+            - run: npm publish
