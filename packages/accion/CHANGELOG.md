@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/JonDotsoy/accion/compare/accion-v0.2.1...accion-v0.3.0) (2024-01-14)
+
+
+### Features
+
+* upgrade version ([5c3aee4](https://github.com/JonDotsoy/accion/commit/5c3aee4ee5c891a4ca8fde490239b16966c12f3c))
+
 ## [0.2.1](https://github.com/JonDotsoy/accion/compare/accion-v0.2.0...accion-v0.2.1) (2024-01-10)
 
 
