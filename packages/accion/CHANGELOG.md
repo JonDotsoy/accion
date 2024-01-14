@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.3](https://github.com/JonDotsoy/accion/compare/accion-v0.3.2...accion-v0.3.3) (2024-01-14)
+
+
+### Miscellaneous Chores
+
+* release 0.3.3 ([b784f84](https://github.com/JonDotsoy/accion/commit/b784f8453dab0df73223af3bf03174f8aad33a68))
+
 ## [0.3.2](https://github.com/JonDotsoy/accion/compare/accion-v0.3.1...accion-v0.3.2) (2024-01-14)
 
 
