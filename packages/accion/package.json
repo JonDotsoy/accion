@@ -47,7 +47,8 @@
   },
   "scripts": {
     "prepack": "npm run build",
-    "build": "bun scripts/build.ts"
+    "build": "bun scripts/build.ts",
+    "ui:dev": "astro "
   },
   "files": [
     "src"

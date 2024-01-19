@@ -1,0 +1,98 @@
+---
+import { GridJobSizeColResize } from "../components/grid-job-size-col-resize";
+import { MenuJobs } from "../components/menu-jobs.tsx";
+import { ChartView, type Chart } from "../components/chart-view.tsx";
+import mermaid from "mermaid";
+
+const a = `
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+`;
+
+// await mermaid.parse(a);
+
+const chart: Chart = {
+    jobs: [],
+    relations: []
+};
+
+import "./styles.css";
+import { GlobalChartJob } from "../components/global-chart-job";
+---
+
+<script>
+    import { jobStore } from "../stores/jobs-store.ts";
+
+    // setup
+
+    jobStore.set([
+        { id: "1", status: "pending", name: "job 1" },
+        { id: "2", status: "pending", name: "job 2", needs:['1'] },
+        { id: "3", status: "pending", name: "job 3", needs:['1','2'] },
+        { id: "4", status: "pending", name: "job 4", needs:['2'] },
+        { id: "5", status: "pending", name: "job 5", needs:['4','1'] },
+    ]);
+
+    const updateStatus = (
+        jobid: string,
+        status: "success" | "failed"|"progressing",
+        ms: number,
+    ) => {
+        setTimeout(() => {
+            jobStore.set(
+                jobStore
+                    .get()
+                    .map((job) =>
+                        job.id === jobid ? { ...job, status } : job,
+                    ),
+            );
+        }, ms);
+    };
+
+    const currentValueToTick = { current: 0 }
+    const nextTick = () => currentValueToTick.current+=500
+    updateStatus("1", "progressing", nextTick());
+    updateStatus("1", "success", nextTick());
+    updateStatus("2", "progressing", nextTick());
+    updateStatus("2", "success", nextTick());
+    updateStatus("3", "progressing", nextTick());
+    updateStatus("3", "failed", nextTick());
+</script>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="container m-auto py-8">
+            <div class="grid grid-cols-[200px_auto_3fr] px-3">
+                <div class="col-span-3">
+                    <h2 class="text-xl font-bold text-gray-800">asd</h2>
+                    <p></p>
+                </div>
+                <div class="py-2">
+                    <h2 class="text-sm font-bold text-gray-500">Jobs</h2>
+                    <MenuJobs client:load />
+                </div>
+                <span class="px-1 grid">
+                    <div class="w-2">
+                        <span
+                            class="transition bg-gray-100 w-[1px] h-full block"
+                        ></span>
+                    </div>
+                </span>
+                <div class="overflow-auto">
+                    <div class="border rounded">
+                        <GlobalChartJob client:only />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
