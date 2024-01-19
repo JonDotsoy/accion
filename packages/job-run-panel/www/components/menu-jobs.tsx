@@ -8,9 +8,11 @@ import { ArrowPath } from "./icons/arrow-path"
 import { menuJobsJonIdFocus } from "../stores/menu-jobs-job-id-focus"
 import { LabelJob } from "./label-job"
 import type { Job } from "../interfaces/Job"
+import classNames from "classnames"
 
 export const LiMenuJobs: FC<{ job: Job }> = ({ job }) => {
     const liRef = useRef<HTMLLIElement>(null)
+    const jobIdFocus = useStore(menuJobsJonIdFocus);
 
     useEffect(() => {
         const li = liRef.current
@@ -30,7 +32,12 @@ export const LiMenuJobs: FC<{ job: Job }> = ({ job }) => {
         }
     }, [liRef.current])
 
-    return <li ref={liRef} key={job.id} className="transition-all hover:bg-gray-200 rounded-md group">
+    return <li ref={liRef} key={job.id} className={classNames(
+        "transition-all",
+        "hover:bg-gray-200",
+        "rounded-md group",
+        { "bg-gray-200": jobIdFocus === job.id },
+    )}>
         <LabelJob job={job} enableReload></LabelJob>
     </li>
 }

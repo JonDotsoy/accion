@@ -1,12 +1,85 @@
 import React from "react";
 import { type FC, useEffect, useId, useRef } from "react";
 import 'reactflow/dist/style.css';
-import { graphlib, layout } from "@dagrejs/dagre"
+import { graphlib, layout, type Node } from "@dagrejs/dagre"
 import classNames from "classnames"
 import { useNodeToGraph } from "./use-node-to-graph";
 import type { Job } from "../interfaces/Job";
 import { LabelJob } from "./label-job.tsx";
 import { DurationFormat } from "./duration-format.tsx";
+import { menuJobsJonIdFocus } from "../stores/menu-jobs-job-id-focus.ts";
+import { useStore } from "@nanostores/react"
+
+const ChartViewNode: FC<{ node: Node<{ job: Job }>, autoFocus?: string }> = ({ node, autoFocus }) => {
+    const refDivAutoFocus = useRef<HTMLDivElement>(null)
+    // const jobIdFocus = useStore(menuJobsJonIdFocus)
+
+    useEffect(() => {
+        const div = refDivAutoFocus.current
+        if (div) {
+            const unsub = menuJobsJonIdFocus.listen((v) => {
+                if (v === node.job.id) {
+                    div.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                        inline: "nearest"
+                    });
+                }
+            })
+
+            const h = () => {
+                menuJobsJonIdFocus.set(node.job.id)
+            }
+
+            const hleave = () => {
+                menuJobsJonIdFocus.set(null)
+            }
+
+            div.addEventListener('mouseover', h)
+            div.addEventListener('mouseleave', hleave)
+
+            return () => {
+                unsub()
+                div.removeEventListener('mouseover', h)
+                div.removeEventListener('mouseleave', hleave)
+            }
+        }
+    }, [refDivAutoFocus.current])
+
+    return <div
+        key={`${node.job.id}`}
+        ref={refDivAutoFocus}
+        style={{
+            '--node-width': `${node.width}px`,
+            '--node-height': `${node.height}px`,
+            '--node-x': `${node.x}px`,
+            '--node-y': `${node.y}px`,
+        } as any}
+        className={classNames(
+            "transition-all",
+            "border",
+            "rounded",
+            "bg-white",
+            "absolute",
+            "grid",
+            "grid-cols-[1fr_auto]",
+            "-translate-x-1/2",
+            "-translate-y-1/2",
+            "w-[var(--node-width)]",
+            "h-[var(--node-height)]",
+            "top-[var(--node-y)]",
+            "left-[var(--node-x)]",
+            "p-2",
+            "hover:shadow",
+            { "shadow": node.job.id === autoFocus },
+        )}
+    >
+        <LabelJob job={node.job}></LabelJob>
+        <span className="text-gray-500 text-xs grid content-center">
+            {node.job.duration && <DurationFormat value={node.job.duration} />}
+        </span>
+    </div>
+}
 
 export type Chart = {
     jobs: Job[],
@@ -19,18 +92,7 @@ export const ChartView: FC<{
     chart: Chart,
 }> = ({ chart, autoFocus }) => {
     const { isLoading, data } = useNodeToGraph(chart.jobs, chart.relations);
-    const refDivAutoFocus = useRef<HTMLDivElement>(null)
 
-    useEffect(() => {
-        const div = refDivAutoFocus.current
-        if (div) {
-            div.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-                inline: "nearest"
-            });
-        }
-    }, [refDivAutoFocus.current])
 
     if (isLoading) return <div>Loading...</div>
     if (!data) return null
@@ -73,40 +135,7 @@ export const ChartView: FC<{
                     />
                 })}
             </svg>
-            {nodes.map(node => {
-                return <div key={`${node.job.id}`}
-                    ref={node.job.id === autoFocus ? refDivAutoFocus : undefined}
-                    style={{
-                        '--node-width': `${node.width}px`,
-                        '--node-height': `${node.height}px`,
-                        '--node-x': `${node.x}px`,
-                        '--node-y': `${node.y}px`,
-                    } as any}
-                    className={classNames(
-                        "transition-all",
-                        "border",
-                        "rounded",
-                        "bg-white",
-                        "absolute",
-                        "grid",
-                        "grid-cols-[1fr_auto]",
-                        "-translate-x-1/2",
-                        "-translate-y-1/2",
-                        "w-[var(--node-width)]",
-                        "h-[var(--node-height)]",
-                        "top-[var(--node-y)]",
-                        "left-[var(--node-x)]",
-                        "p-2",
-                        "hover:shadow",
-                        { "shadow-xl": node.job.id === autoFocus },
-                    )}
-                >
-                    <LabelJob job={node.job}></LabelJob>
-                    <span className="text-gray-500 text-xs grid content-center">
-                        {node.job.duration && <DurationFormat value={node.job.duration} />}
-                    </span>
-                </div>
-            })}
+            {nodes.map(node => <ChartViewNode node={node} autoFocus={autoFocus}></ChartViewNode>)}
             {edges.map(edge => {
                 return edge.points.map((point, index, points) => {
                     const isStart = index === 0
