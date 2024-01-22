@@ -1,4 +1,4 @@
-import { atom } from "nanostores"
-import { type Job } from "../interfaces/Job.ts"
+import { atom } from "nanostores";
+import { type Job } from "../interfaces/Job.ts";
 
-export const jobStore = atom<Job[]>([])
+export const jobStore = atom<Job[]>([]);

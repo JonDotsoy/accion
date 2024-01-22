@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "verbatimModuleSyntax": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "outDir": "dist/esm/",
+    "declaration": true,
+    "inlineSourceMap": true,
+    "skipLibCheck": true,
+    "allowJs": true
+  },
+  "files": ["src/create-handler-jobs.ts"]
+}

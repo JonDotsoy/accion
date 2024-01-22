@@ -1,1 +1,6 @@
 !.storybook
+*.tgz
+dist/
+node_modules/
+static/
+storybook-static/
