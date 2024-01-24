@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "verbatimModuleSyntax": true,
     "jsx": "react-jsx",
     "jsxImportSource": "react",
@@ -12,5 +12,8 @@
     "skipLibCheck": true,
     "allowJs": true
   },
-  "files": ["src/create-handler-jobs.ts"]
+  "files": [
+    "src/create-handler-jobs.ts",
+    "src/create-jobs-store.ts"
+  ]
 }

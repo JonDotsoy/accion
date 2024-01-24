@@ -16,8 +16,8 @@ Usage: accion exec utility [argument ...]
 `.trim();
 
 const main = async () => {
-    if (showHelp) return console.log(helpMessage)
     if (execArgs) return execCmd(execArgs)
+    return console.log(helpMessage)
 }
 
 await main()

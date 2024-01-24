@@ -1,63 +1,71 @@
-import { serve, ServerWebSocket, type Server } from "bun"
-// import { readFile, watch } from "fs/promises"
-// import { init } from "./render-frame/build-main.ts"
-// import { HRServer } from "./render-frame/hr.ts"
+import { Server, pathToFileURL } from "bun"
+import { exists, readFile, stat } from "fs/promises"
+import mime from "mime"
+import { atom } from "nanostores"
+import { createHandlerJobs } from "@accions/job-run-panel/dist/esm/src/create-handler-jobs"
+import { createJobStore } from "@accions/job-run-panel/dist/esm/src/create-jobs-store"
 
-import { build } from "astro"
-import pageConfigs from "../../../../job-run-panel/astro.config.ts"
+const staticDir = new URL("./static/", pathToFileURL(await import.meta.resolve('@accions/job-run-panel/package.json')))
 
-export const renderFrame = () => {
+type Options = {
+    port?: number
+}
+
+export const renderFrame = (option?: Options) => {
+    const port = option?.port ?? 7654;
     let server: null | Server = null;
 
+    const store = atom({ digest: 'foo', payload: new TextEncoder().encode('ok') })
+    const s = createJobStore()
+    using h = createHandlerJobs(s.store);
+
+    s.update({
+        jobs: [
+            { id: '1', name: 'task 1', status: 'failed', duration: 20 },
+            { id: '2', name: 'task 2', status: 'failed' },
+            { id: '3', name: 'task 3', status: 'pending', needs: ['1', '2'] },
+        ]
+    })
+
+    const close = () => {
+        h[Symbol.dispose]()
+        server?.stop(true)
+    }
+
     return {
-        close() {
-            server?.stop()
-        },
+        [Symbol.dispose]: close,
+        close,
         async open() {
-            await build(pageConfigs)
-            // const buildRenderFrame = await init()
-            // const hrServer = new HRServer()
+            server = Bun.serve({
+                port,
+                async fetch(request) {
+                    const url = new URL(request.url);
 
-            // buildRenderFrame.subscribeChanges(() => { hrServer.dispatch(buildRenderFrame.sumHash()) })
+                    if (url.pathname === '/api/jobs') return h.fetch(request)
 
-            // server = Bun.serve({
-            //     port: 8765,
-            //     async fetch(request, server) {
-            //         const url = new URL(request.url);
+                    const reduceAlias = (path: string) => {
+                        if (path === '/') return '/index.html'
+                        return path
+                    }
 
-            //         if (request.headers.get('upgrade') === 'websocket') {
-            //             if (server.upgrade(request)) {
-            //                 return undefined
-            //             } else {
-            //                 return new Response(null, { status: 400 })
-            //             }
-            //         };
+                    const staticPath = new URL(`.${reduceAlias(pathToFileURL(url.pathname).pathname)}`, staticDir)
+                    if (await exists(staticPath) && (await stat(staticPath)).isFile()) {
+                        const headers = new Headers()
 
-            //         const response = await buildRenderFrame.matchRequest(request)
-            //         if (response) return response;
+                        const t = staticPath.pathname.substring(staticPath.pathname.lastIndexOf('.'))
+                        const type = mime.getType(t)
+                        if (type) headers.set('Content-Type', type);
 
-            //         return new Response(null, { status: 404 })
-            //     },
-            //     websocket: {
-            //         message(ws, message) {
-            //         }, // a message is received
-            //         open(ws) {
-            //             hrServer.subWS(ws)
-            //             hrServer.dispatch(buildRenderFrame.sumHash())
-            //         },
-            //         close(ws, code, message) {
-            //             hrServer.deleteSubWS(ws)
-            //         },
-            //         drain(ws) { }, // the socket is ready to receive more data
-            //     },
-            // })
+                        return new Response(await readFile(staticPath), {
+                            headers
+                        })
+                    }
 
-            // const initUrl = new URL('http://localhost:8765')
-            // initUrl.port = `${server.port}`
+                    return new Response(null, { status: 404 })
+                }
+            })
 
-            // console.log("🚀 ~ open ~ initUrl:", `${initUrl}`)
-            // // execSync(`open ${initUrl}`)
+            console.log(`🚀 View report on ${server.url}`)
         },
-        [Symbol.dispose]: () => { },
     }
 }

@@ -2,6 +2,7 @@
   "name": "@accions/job-run-panel",
   "version": "0.1.0",
   "type": "module",
+  
   "devDependencies": {
     "@astrojs/check": "^0.4.1",
     "@astrojs/node": "^8.0.0",

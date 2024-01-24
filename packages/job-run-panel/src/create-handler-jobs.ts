@@ -1,5 +1,6 @@
 import { type Atom } from "nanostores";
 import * as YAML from "yaml";
+import "./create-jobs-store"
 
 type Options = {
   timeout: number;

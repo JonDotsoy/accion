@@ -1,6 +1,7 @@
 import { spawn } from "child_process"
 import { any, flag, flags, isBooleanAt, restArgumentsAt } from "@jondotsoy/flags"
 import { renderFrame } from "../components/visor-ui/render-frame"
+import { createContext, createContextAsync } from "../utils/disposal-tool"
 
 const parseArgs = (args: string[]) => {
     type Option = {
@@ -20,24 +21,31 @@ const parseArgs = (args: string[]) => {
 }
 
 export default async (args: string[]) => {
-    const { ui, args: a = [] } = parseArgs(args);
+    await createContextAsync(async ({ using }) => {
+        const { ui, args: a = [] } = parseArgs(args);
 
-    const server = renderFrame();
+        const server = using(renderFrame());
 
-    if (ui) { await server.open() }
+        if (ui) { await server.open() }
 
-    const [command, ...commandArgs] = a;
-    const { promise, resolve, reject } = Promise.withResolvers<number | null>();
+        const [command, ...commandArgs] = a;
+        const { promise, resolve, reject } = Promise.withResolvers<number | null>();
 
-    const childProcess = spawn(command, commandArgs, { stdio: 'pipe' });
+        const childProcess = spawn(command, commandArgs, { stdio: 'pipe' });
 
-    childProcess.once('close', (exitCode) => resolve(exitCode));
-    childProcess.on('error', (error) => reject(error));
+        childProcess.once('close', (exitCode) => resolve(exitCode));
+        childProcess.on('error', (error) => reject(error));
 
-    childProcess.stdout.pipe(process.stdout);
-    childProcess.stderr.pipe(process.stderr);
-    childProcess.stdin.pipe(process.stdin);
+        childProcess.stdout.pipe(process.stdout);
+        childProcess.stderr.pipe(process.stderr);
+        childProcess.stdin.pipe(process.stdin);
 
-    const exitCode = await promise;
-    process.exitCode = exitCode ?? undefined;
+        const exitCode = await promise;
+        process.exitCode = exitCode ?? undefined;
+
+        if (ui) await new Promise(r => {
+            console.log(``)
+            console.log(`Close with Ctrl+C`)
+        })
+    })
 }

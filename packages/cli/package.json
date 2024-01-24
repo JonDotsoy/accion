@@ -4,8 +4,14 @@
   "type": "module",
   "bin": "./dist/bin.js",
   "devDependencies": {
-    "@types/react-dom": "^18.2.18",
-    "bun-types": "latest"
+    "@jondotsoy/flags": "^2.0.2",
+    "@types/mime-types": "^2.1.4",
+    "accion": "^0.3.3",
+    "bun-types": "latest",
+    "mermaid": "^10.7.0",
+    "mime": "^4.0.1",
+    "mime-types": "^2.1.35",
+    "nanostores": "^0.9.5"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -15,20 +21,5 @@
     "build": "bun build src/bin.ts --outdir dist --target node",
     "ui:dev": "astro dev --config src/components/visor-ui/astro.config.ts"
   },
-  "dependencies": {
-    "@astrojs/react": "^3.0.9",
-    "@astrojs/tailwind": "^5.1.0",
-    "@jondotsoy/flags": "^2.0.2",
-    "@nanostores/react": "^0.7.1",
-    "@types/mime-types": "^2.1.4",
-    "@types/react": "^18.2.48",
-    "accion": "^0.3.3",
-    "astro": "^4.1.2",
-    "mermaid": "^10.7.0",
-    "mime-types": "^2.1.35",
-    "nanostores": "^0.9.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwindcss": "^3.4.1"
-  }
+  "dependencies": {}
 }
