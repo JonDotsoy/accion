@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/JonDotsoy/accion/compare/accion-v0.3.3...accion-v0.4.0) (2024-01-24)
+
+
+### Features
+
+* add module chart visor ([6bfaa7e](https://github.com/JonDotsoy/accion/commit/6bfaa7e7b6168b9b67f7f958994aa02d9a53adca))
+
 ## [0.3.3](https://github.com/JonDotsoy/accion/compare/accion-v0.3.2...accion-v0.3.3) (2024-01-14)
 
 
