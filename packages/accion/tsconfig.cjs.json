@@ -1,9 +1,9 @@
 {
-    "extends": "./tsconfig.json",
-    "compilerOptions": {
-        "outDir": "./lib/cjs/",
-        "allowImportingTsExtensions": false,
-        "noEmit": false,
-        "declaration": true
-    }
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./lib/cjs/",
+    "allowImportingTsExtensions": false,
+    "noEmit": false,
+    "declaration": true
+  }
 }
