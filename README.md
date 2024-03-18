@@ -85,12 +85,12 @@ const randomNumber = job("get random number", () => {
   return randomNumber;
 });
 
-job("write file", { randomNumber }, async ({ randomNumber }) => {
+job("write file", { input: { randomNumber } }, async ({ randomNumber }) => {
   console.log(`Write the random number ${randomNumber}`);
   return { ok: true };
 });
 
-job("get number", { randomNumber }, async ({ randomNumber }) => {
+job("get number", { input: { randomNumber } }, async ({ randomNumber }) => {
   console.log(`The random number is ${randomNumber}`);
   return { randomNumber };
 });
