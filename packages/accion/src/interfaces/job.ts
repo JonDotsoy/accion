@@ -1,4 +1,4 @@
-import type { Arg } from "./arg.ts";
+import type { Arg } from "./arg";
 
 export type JobOptions<I extends Record<string, JobContext<any>>> = {
   id?: string;
@@ -11,6 +11,7 @@ export type JobContext<_R extends JobReturn> = {
   input: null | Record<string, JobContext<any>>;
   description: null | string;
   cb: (...args: any[]) => any;
+  call: (...args: any[]) => any;
 };
 export type JobReturn = Arg | void;
 export type JobCb<R extends JobReturn> =

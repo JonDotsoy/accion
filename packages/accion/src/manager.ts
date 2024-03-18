@@ -1,11 +1,11 @@
-export type { JobContext } from "./interfaces/job.ts";
-export type { StorageService } from "./interfaces/storage-service.ts";
+export type { JobContext } from "./interfaces/job";
+export type { StorageService } from "./interfaces/storage-service";
 import { nextTick } from "process";
-import { DSN, Closing } from "./dsn.ts";
-import { State } from "./dto/state.ts";
-import { Event } from "./interfaces/event.ts";
-import type { JobContext } from "./interfaces/job.ts";
-import type { StorageService } from "./interfaces/storage-service.ts";
+import { DSN, Closing } from "./dsn";
+import { State } from "./dto/state";
+import { Event } from "./interfaces/event";
+import type { JobContext } from "./interfaces/job";
+import type { StorageService } from "./interfaces/storage-service";
 
 type JobState = {
   state: State;

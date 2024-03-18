@@ -52,7 +52,7 @@ export class FetchDSN extends DSN {
       const reason = this.signal?.reason;
       unsubscribeManager();
       if (reason instanceof Closing) {
-        this.preventStopped = true
+        this.preventStopped = true;
         const { promise, resolve } = Promise.withResolvers<void>();
         this.requestLoopStack.subscribe(() => {
           if (

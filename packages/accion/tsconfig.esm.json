@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "inlineSourceMap": true,
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": false,
+    "noEmit": false,
+    "outDir": "./dist/esm/"
+  },
+  "exclude": ["test", "./scripts", "*.tsbuildinfo"]
+}

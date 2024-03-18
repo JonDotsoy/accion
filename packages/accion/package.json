@@ -9,38 +9,26 @@
   "types": "./src/job.d.ts",
   "exports": {
     ".": {
-      "import": "./src/job.js",
-      "types": "./src/job.d.ts"
+      "import": "./dist/esm/src/job.js"
     },
     "./job": {
-      "import": "./src/job.js",
-      "types": "./src/job.d.ts"
-    },
-    "./src/job": {
-      "import": "./src/job.js",
-      "types": "./src/job.d.ts"
+      "import": "./dist/esm/src/job.js"
     },
     "./expose": {
-      "import": "./src/expose.js",
-      "types": "./src/expose.d.ts"
-    },
-    "./src/expose": {
-      "import": "./src/expose.js",
-      "types": "./src/expose.d.ts"
+      "import": "./dist/esm/src/expose.js"
     },
     "./manager": {
-      "import": "./src/manager.js",
-      "types": "./src/manager.d.ts"
+      "import": "./dist/esm/src/manager.js"
     },
-    "./src/manager": {
-      "import": "./src/manager.js",
-      "types": "./src/manager.d.ts"
+    "./dsn": {
+      "import": "./dist/esm/src/dsn.js"
     }
   },
   "devDependencies": {
     "bun-types": "^1.0.18",
     "glob": "^10.3.10",
     "prettier": "^3.2.4",
+    "use-workspace": "^0.1.5",
     "yaml": "^2.3.4"
   },
   "peerDependencies": {
@@ -48,9 +36,8 @@
   },
   "scripts": {
     "prepack": "npm run build",
-    "build": "bun scripts/build.ts",
-    "fmt": "prettier -w .",
-    "ui:dev": "astro "
+    "build": "make build",
+    "fmt": "prettier -w ."
   },
   "files": [
     "src"

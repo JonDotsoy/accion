@@ -1,5 +1,5 @@
-import { Manager } from "../manager.ts";
-import { State } from "../dto/state.ts";
+import { Manager } from "../manager";
+import { State } from "../dto/state";
 
 export const status = (manager: Manager) => {
   return new Response(

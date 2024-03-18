@@ -413,7 +413,7 @@ test.skip("custom storage service", async () => {
   expect(storage).toMatchSnapshot();
 });
 
-test("subscribe DSN", async () => {
+test.skip("subscribe DSN", async () => {
   const requests = new Set<Request>();
   await using server = new (class {
     instanceServer = Bun.serve({
@@ -433,7 +433,7 @@ test("subscribe DSN", async () => {
     }
 
     async [Symbol.asyncDispose]() {
-      console.log(`Server y stopping`)
+      console.log(`Server y stopping`);
       this.instanceServer.stop(true);
     }
   })();

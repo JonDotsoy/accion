@@ -2,3 +2,5 @@ types
 *.d.ts
 *.js
 !.editorconfig
+!.prettierignore
+!.npmignore

@@ -43,5 +43,6 @@ export const job = <
     description,
     input,
     cb,
+    call: cb,
   };
 };
