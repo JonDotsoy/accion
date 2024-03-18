@@ -22,8 +22,6 @@ this function is used to describe a job.
 - dependencies: dependencies of other jobs. When the job is called the first argument to the handler will be an object with their values.
 - handler: all behavior to run this job
 
-
-
 ### workflow file
 
 Ideas:
@@ -37,12 +35,10 @@ Is file to describe all workflow to run scripts. this file look as this:
 // main.workflow.ts
 import { job } from "accion/workflow";
 
-job(
-  () => {
-    console.log("ok");
-    return {};
-  },
-);
+job(() => {
+  console.log("ok");
+  return {};
+});
 ```
 
 ## Guide
@@ -89,12 +85,12 @@ const randomNumber = job("get random number", () => {
   return randomNumber;
 });
 
-job("write file", {randomNumber}, async ({randomNumber}) => {
+job("write file", { randomNumber }, async ({ randomNumber }) => {
   console.log(`Write the random number ${randomNumber}`);
   return { ok: true };
 });
 
-job("get number", {randomNumber}, async ({randomNumber}) => {
+job("get number", { randomNumber }, async ({ randomNumber }) => {
   console.log(`The random number is ${randomNumber}`);
   return { randomNumber };
 });
@@ -110,6 +106,42 @@ $ accion run biz "get number"
 # { "randomNumber": 0.3 }
 $ accion run biz "get number"
 # { "randomNumber": 0.3 }
+```
+
+### Test Job
+
+A Job object can be use as a function.
+
+**jobs.ts**
+
+```ts
+export const nextSunday = job("get number", async () => {
+  return new Date("2023-12-31");
+});
+
+export const pushDate = job(
+  "push date",
+  { nextSunday },
+  async ({ nextSunday }) => {
+    await fetch(`http://my-service/create/sunday`, {
+      method: "POST",
+      data: `${nextSunday}`,
+    });
+    return true;
+  },
+);
+```
+
+**tests.ts**
+
+```ts
+test("...", async () => {
+  const { pushDate } = await import("./jobs.ts");
+
+  const res = await pushDate.call({ nextSunday: new Date("2023-12-03") });
+
+  expect(res).toBeTrue();
+});
 ```
 
 ## Documentations
