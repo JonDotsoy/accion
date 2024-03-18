@@ -1,48 +1,48 @@
 on:
-    push:
-        branches: 
-            - develop
-        paths: 
-            - packages/accion/**
+  push:
+    branches:
+      - develop
+    paths:
+      - packages/accion/**
 
-permissions: 
-    contents: write
-    pull-requests: write
+permissions:
+  contents: write
+  pull-requests: write
 
 name: Release please Accion
 
 jobs:
-    release-please:
-        runs-on: ubuntu-latest
-        outputs:
-            release_created: ${{ steps.release.outputs.releases_created }}
-        steps:
-            - uses: google-github-actions/release-please-action@v4
-              id: release
-              env: {}
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  path: packages/accion
-    publish:
-        runs-on: ubuntu-latest
-        needs: release-please
-        if: needs.release-please.outputs.release_created == 'true'
-        defaults:
-            run:
-                working-directory: packages/accion
-        steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: 20
-                  always-auth: true
-                  registry-url: https://registry.npmjs.org
-            - uses: oven-sh/setup-bun@v1
-              with:
-                bun-version: latest
-            - run: bun install
-              env:
-                NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-            - run: npm publish
-              env:
-                NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.releases_created }}
+    steps:
+      - uses: google-github-actions/release-please-action@v4
+        id: release
+        env: {}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: packages/accion
+  publish:
+    runs-on: ubuntu-latest
+    needs: release-please
+    if: needs.release-please.outputs.release_created == 'true'
+    defaults:
+      run:
+        working-directory: packages/accion
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          always-auth: true
+          registry-url: https://registry.npmjs.org
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - run: bun install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
