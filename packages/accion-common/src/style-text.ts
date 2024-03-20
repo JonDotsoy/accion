@@ -1,8 +1,6 @@
-export type TextStyled = `\x1b[${number}m${string}\x1b[${number}m`
+export type TextStyled = `\x1b[${number}m${string}\x1b[${number}m`;
 
-export type template = (
-    body: string,
-) => TextStyled;
+export type template = (body: string) => TextStyled;
 
 export const colorsCodes = {
     reset: [0, 0],
@@ -70,20 +68,24 @@ export const colorsCodes = {
     bgWhiteBright: [107, 49],
 } as const;
 
-export type Style = keyof typeof colorsCodes
+export type Style = keyof typeof colorsCodes;
 
-const isStyle = (key: string): key is keyof typeof colorsCodes => Reflect.has(colorsCodes, key)
+const isStyle = (key: string): key is keyof typeof colorsCodes =>
+    Reflect.has(colorsCodes, key);
 
 export const styleTextSimple = (style: Style, body: string) => {
     if (isStyle(style)) {
         const [open, close] = colorsCodes[style];
-        const nextBody: TextStyled = `\x1b[${open}m${body}\x1b[${close}m`
-        return nextBody
+        const nextBody: TextStyled = `\x1b[${open}m${body}\x1b[${close}m`;
+        return nextBody;
     }
-    return body
-}
+    return body;
+};
 
 export const styleText = (style: Style | Style[], body: string) => {
     const styles = Array.isArray(style) ? style : [style];
-    return styles.reduce((accum, style): string => styleTextSimple(style, accum), body)
-}
+    return styles.reduce(
+        (accum, style): string => styleTextSimple(style, accum),
+        body,
+    );
+};

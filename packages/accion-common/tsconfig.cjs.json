@@ -10,5 +10,5 @@
         "rootDir": "./src/",
         "noEmit": false
     },
-    "exclude": ["./tests/","./lib/"]
+    "exclude": ["./tests/", "./lib/"]
 }
