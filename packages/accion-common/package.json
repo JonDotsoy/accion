@@ -10,7 +10,7 @@
         "typescript": "^5.0.0"
     },
     "files": [
-        "./src"
+        "./lib/"
     ],
     "version": "0.2.0",
     "scripts": {
@@ -24,20 +24,25 @@
     "main": "./src/index.js",
     "types": "./src/index.d.ts",
     "exports": {
-        ".": {
-            "default": "./src/index.js",
-            "types": "./src/index.d.ts",
-            "module": "./src/index.js"
-        },
         "./debug": {
-            "default": "./src/debug.js",
-            "types": "./src/debug.d.ts",
-            "import": "./src/debug.js"
+            "default": "./lib/esm/debug.js",
+            "require": "./lib/cjs/debug.js",
+            "import": "./lib/esm/debug.js"
+        },
+        "./exec": {
+            "default": "./lib/esm/exec.js",
+            "require": "./lib/cjs/exec.js",
+            "import": "./lib/esm/exec.js"
         },
         "./promise-with-resolvers": {
-            "default": "./src/promise-with-resolvers.js",
-            "types": "./src/promise-with-resolvers.d.ts",
-            "import": "./src/promise-with-resolvers.js"
+            "default": "./lib/esm/promise-with-resolvers.js",
+            "require": "./lib/cjs/promise-with-resolvers.js",
+            "import": "./lib/esm/promise-with-resolvers.js"
+        },
+        "./style-text":{
+            "default": "./lib/esm/style-text.js",
+            "require": "./lib/cjs/style-text.js",
+            "import": "./lib/esm/style-text.js"
         }
     }
 }
