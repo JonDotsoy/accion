@@ -1,48 +1,39 @@
 {
-    "name": "@accions/common",
-    "module": "./src/index.js",
-    "type": "module",
-    "devDependencies": {
-        "bun-types": "latest",
-        "prettier": "^3.2.5"
+  "name": "@accions/common",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
+    "bun-types": "latest",
+    "prettier": "^3.2.5",
+    "roolup": "^1.0.4",
+    "use-workspace": "^0.1.5"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "files": [
+    "./lib/cjs/",
+    "./lib/esm/"
+  ],
+  "version": "0.2.2",
+  "scripts": {
+    "prepack": "make build"
+  },
+  "exports": {
+    "./debug": {
+      "default": "./lib/cjs/debug.js",
+      "import": "./lib/esm/debug.js"
     },
-    "peerDependencies": {
-        "typescript": "^5.0.0"
+    "./exec": {
+      "default": "./lib/cjs/exec.js",
+      "import": "./lib/esm/exec.js"
     },
-    "files": [
-        "./lib/"
-    ],
-    "version": "0.2.2",
-    "scripts": {
-        "prepublish": "npm run build:ts",
-        "build": "npm run build:ts && npm run build:index && npm run build:debug && npm run build:promise-with-resolvers",
-        "build:ts": "tsc --project ./tsconfig.types.json",
-        "build:index": "bun build src/index.ts --target node --outfile src/index.js",
-        "build:debug": "bun build src/debug.ts --outfile src/debug.js",
-        "build:promise-with-resolvers": "bun build src/promise-with-resolvers.ts --outfile src/promise-with-resolvers.js"
+    "./promise-with-resolvers": {
+      "default": "./lib/cjs/promise-with-resolvers.js",
+      "import": "./lib/esm/promise-with-resolvers.js"
     },
-    "main": "./src/index.js",
-    "types": "./src/index.d.ts",
-    "exports": {
-        "./debug": {
-            "default": "./lib/esm/debug.js",
-            "require": "./lib/cjs/debug.js",
-            "import": "./lib/esm/debug.js"
-        },
-        "./exec": {
-            "default": "./lib/esm/exec.js",
-            "require": "./lib/cjs/exec.js",
-            "import": "./lib/esm/exec.js"
-        },
-        "./promise-with-resolvers": {
-            "default": "./lib/esm/promise-with-resolvers.js",
-            "require": "./lib/cjs/promise-with-resolvers.js",
-            "import": "./lib/esm/promise-with-resolvers.js"
-        },
-        "./style-text": {
-            "default": "./lib/esm/style-text.js",
-            "require": "./lib/cjs/style-text.js",
-            "import": "./lib/esm/style-text.js"
-        }
+    "./style-text": {
+      "default": "./lib/cjs/style-text.js",
+      "import": "./lib/esm/style-text.js"
     }
+  }
 }

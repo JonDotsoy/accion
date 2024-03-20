@@ -6,7 +6,7 @@
         "moduleResolution": "Bundler",
         "allowImportingTsExtensions": false,
         "rootDir": "./src/",
-        "noEmit": false
+        "noEmit": false,
     },
     "exclude": ["./tests/", "./lib/"]
 }

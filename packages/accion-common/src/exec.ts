@@ -1,6 +1,6 @@
-import { debug } from "./debug";
+import { debug } from "./debug.js";
 import * as child_process from "child_process";
-import { promiseWithResolvers } from "./promise-with-resolvers";
+import { promiseWithResolvers } from "./promise-with-resolvers.js";
 
 type Options = {
     returnOutput?: boolean;

@@ -1,6 +1,6 @@
 const noop: (...args: any[]) => void = () => {};
 
-export const promiseWithResolvers = <T>() => {
+export const promiseWithResolvers = <T extends any>() => {
     let resolve: (value: T) => void = noop;
     let reject: (reason: any) => void = noop;
 

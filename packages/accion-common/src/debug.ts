@@ -1,4 +1,4 @@
-import { Style, styleText } from "./style-text";
+import { Style, styleText } from "./style-text.js";
 
 const schemaColorsRandom = [
     "red",
