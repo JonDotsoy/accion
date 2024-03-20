@@ -1,42 +1,43 @@
 {
-  "name": "@accions/common",
-  "module": "./src/index.js",
-  "type": "module",
-  "devDependencies": {
-    "bun-types": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "files": [
-    "./src"
-  ],
-  "version": "0.2.0",
-  "scripts": {
-    "prepublish": "npm run build:ts",
-    "build": "npm run build:ts && npm run build:index && npm run build:debug && npm run build:promise-with-resolvers",
-    "build:ts": "tsc --project ./tsconfig.types.json",
-    "build:index": "bun build src/index.ts --target node --outfile src/index.js",
-    "build:debug": "bun build src/debug.ts --outfile src/debug.js",
-    "build:promise-with-resolvers": "bun build src/promise-with-resolvers.ts --outfile src/promise-with-resolvers.js"
-  },
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
-  "exports": {
-    ".": {
-      "default": "./src/index.js",
-      "types": "./src/index.d.ts",
-      "module": "./src/index.js"
+    "name": "@accions/common",
+    "module": "./src/index.js",
+    "type": "module",
+    "devDependencies": {
+        "bun-types": "latest",
+        "prettier": "^3.2.5"
     },
-    "./debug": {
-      "default": "./src/debug.js",
-      "types": "./src/debug.d.ts",
-      "import": "./src/debug.js"
+    "peerDependencies": {
+        "typescript": "^5.0.0"
     },
-    "./promise-with-resolvers": {
-      "default": "./src/promise-with-resolvers.js",
-      "types": "./src/promise-with-resolvers.d.ts",
-      "import": "./src/promise-with-resolvers.js"
+    "files": [
+        "./src"
+    ],
+    "version": "0.2.0",
+    "scripts": {
+        "prepublish": "npm run build:ts",
+        "build": "npm run build:ts && npm run build:index && npm run build:debug && npm run build:promise-with-resolvers",
+        "build:ts": "tsc --project ./tsconfig.types.json",
+        "build:index": "bun build src/index.ts --target node --outfile src/index.js",
+        "build:debug": "bun build src/debug.ts --outfile src/debug.js",
+        "build:promise-with-resolvers": "bun build src/promise-with-resolvers.ts --outfile src/promise-with-resolvers.js"
+    },
+    "main": "./src/index.js",
+    "types": "./src/index.d.ts",
+    "exports": {
+        ".": {
+            "default": "./src/index.js",
+            "types": "./src/index.d.ts",
+            "module": "./src/index.js"
+        },
+        "./debug": {
+            "default": "./src/debug.js",
+            "types": "./src/debug.d.ts",
+            "import": "./src/debug.js"
+        },
+        "./promise-with-resolvers": {
+            "default": "./src/promise-with-resolvers.js",
+            "types": "./src/promise-with-resolvers.d.ts",
+            "import": "./src/promise-with-resolvers.js"
+        }
     }
-  }
 }

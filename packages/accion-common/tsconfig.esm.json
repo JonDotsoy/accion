@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "declaration": true,
+        "inlineSourceMap": true,
+        "moduleResolution": "Bundler",
+        "allowImportingTsExtensions": false,
+        "rootDir": "./src/",
+        "noEmit": false
+    },
+    "exclude": ["./tests/","./lib/"]
+}

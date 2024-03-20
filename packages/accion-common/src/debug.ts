@@ -1,4 +1,4 @@
-type template = (body: string) => `\u001b[${number}m${string}\u001b[${number}m`
+type template = (body: string) => `\u001b[${number}m${string}\u001b[${number}m`;
 
 const colorsCodes = {
     reset: [0, 0],
@@ -60,58 +60,85 @@ const colorsCodes = {
     whiteBG: [47, 49],
 } as const;
 
-const colors = Object.fromEntries(Array.from(Object.entries(colorsCodes), ([colorName, [open, close]]) => [colorName, (body: string) => `\u001b[${open}m${body}\u001b[${close}m`])) as Record<keyof typeof colorsCodes, template>
+const colors = Object.fromEntries(
+    Array.from(Object.entries(colorsCodes), ([colorName, [open, close]]) => [
+        colorName,
+        (body: string) => `\u001b[${open}m${body}\u001b[${close}m`,
+    ]),
+) as Record<keyof typeof colorsCodes, template>;
 
 const schemaColorsRandom = [
-    colors['red'],
-    colors['green'],
-    colors['yellow'],
-    colors['blue'],
-    colors['magenta'],
-    colors['cyan'],
-].sort(() => Math.random() > 0.5 ? 1 : -1)
+    colors["red"],
+    colors["green"],
+    colors["yellow"],
+    colors["blue"],
+    colors["magenta"],
+    colors["cyan"],
+].sort(() => (Math.random() > 0.5 ? 1 : -1));
 
-const indexLogRef = { current: 0 }
+const indexLogRef = { current: 0 };
 
-const minuteFormat = new Intl.NumberFormat(undefined, { style: 'unit', unit: 'minute', unitDisplay: 'narrow' })
-const secondFormat = new Intl.NumberFormat(undefined, { style: 'unit', unit: 'second', unitDisplay: 'narrow' })
-const millisecondFormat = new Intl.NumberFormat(undefined, { style: 'unit', unit: 'millisecond', unitDisplay: 'narrow' })
+const minuteFormat = new Intl.NumberFormat(undefined, {
+    style: "unit",
+    unit: "minute",
+    unitDisplay: "narrow",
+});
+const secondFormat = new Intl.NumberFormat(undefined, {
+    style: "unit",
+    unit: "second",
+    unitDisplay: "narrow",
+});
+const millisecondFormat = new Intl.NumberFormat(undefined, {
+    style: "unit",
+    unit: "millisecond",
+    unitDisplay: "narrow",
+});
 
 const durationFormat = (durationMillisecond: number) => {
-    if (durationMillisecond < 1000) return millisecondFormat.format(durationMillisecond)
-    if (durationMillisecond < 60000) return secondFormat.format(durationMillisecond / 1000)
-    return minuteFormat.format(durationMillisecond / 60000)
-}
+    if (durationMillisecond < 1000)
+        return millisecondFormat.format(durationMillisecond);
+    if (durationMillisecond < 60000)
+        return secondFormat.format(durationMillisecond / 1000);
+    return minuteFormat.format(durationMillisecond / 60000);
+};
 
 export const makeIsEnabled = (debugExpression?: string) => {
-    const rules = debugExpression?.split(',')
-        .filter(chunk => chunk.length)
-        .map(chunk => `^${chunk.replace(/\*|\W/g, (char) => char === '*' ? '.*?' : `\\${char}`)}$`)
-        .map(chunk => new RegExp(chunk))
-        ?? []
+    const rules =
+        debugExpression
+            ?.split(",")
+            .filter((chunk) => chunk.length)
+            .map(
+                (chunk) =>
+                    `^${chunk.replace(/\*|\W/g, (char) => (char === "*" ? ".*?" : `\\${char}`))}$`,
+            )
+            .map((chunk) => new RegExp(chunk)) ?? [];
 
     return (namespace: string) => {
-        if (!rules.length) return false
-        return rules.some(exp => exp.test(namespace))
-    }
-}
+        if (!rules.length) return false;
+        return rules.some((exp) => exp.test(namespace));
+    };
+};
 
-const globalIsEnabled = makeIsEnabled(process.env.DEBUG ?? '')
+const globalIsEnabled = makeIsEnabled(process.env.DEBUG ?? "");
 
 export const debug = (namespace: string) => {
-    let lastCall = Date.now()
-    const indexLog = indexLogRef.current++
-    const schemaColor = schemaColorsRandom[indexLog % schemaColorsRandom.length]
+    let lastCall = Date.now();
+    const indexLog = indexLogRef.current++;
+    const schemaColor =
+        schemaColorsRandom[indexLog % schemaColorsRandom.length];
     const log = (message: string) => {
-        const l = Date.now() - lastCall
-        lastCall = Date.now()
+        const l = Date.now() - lastCall;
+        lastCall = Date.now();
         if (log.enabled) {
-            const latency = `${l >= 0 ? '+' : '-'}${durationFormat(l)}`
-            console.log(`${schemaColor(namespace)} ${message} ${schemaColor(latency)}`)
+            const latency = `${l >= 0 ? "+" : "-"}${durationFormat(l)}`;
+            console.log(
+                `${schemaColor(namespace)} ${message} ${schemaColor(latency)}`,
+            );
         }
-    }
-    log.namespace = namespace
-    log.enabled = globalIsEnabled(namespace)
-    log.extend = (childNamespace: string = '') => debug(`${namespace}${childNamespace}`)
-    return log
-}
+    };
+    log.namespace = namespace;
+    log.enabled = globalIsEnabled(namespace);
+    log.extend = (childNamespace: string = "") =>
+        debug(`${namespace}${childNamespace}`);
+    return log;
+};

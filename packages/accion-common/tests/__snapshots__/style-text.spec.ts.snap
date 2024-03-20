@@ -1,0 +1,7 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should style a style: text underline 1`] = `"[4mtext[24m"`;
+
+exports[`should style a style: text underline, bold, and red 1`] = `"[31m[1m[4mtext[24m[22m[39m"`;
+
+exports[`should style a style: text red 1`] = `"[31mtext[39m"`;
