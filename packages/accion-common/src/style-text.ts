@@ -73,7 +73,7 @@ export type Style = keyof typeof colorsCodes;
 const isStyle = (key: string): key is keyof typeof colorsCodes =>
     Reflect.has(colorsCodes, key);
 
-export const styleTextSimple = (style: Style, body: string) => {
+const styleTextSimple = (style: Style, body: string) => {
     if (isStyle(style)) {
         const [open, close] = colorsCodes[style];
         const nextBody: TextStyled = `\x1b[${open}m${body}\x1b[${close}m`;

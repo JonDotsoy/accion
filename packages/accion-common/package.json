@@ -39,7 +39,7 @@
             "require": "./lib/cjs/promise-with-resolvers.js",
             "import": "./lib/esm/promise-with-resolvers.js"
         },
-        "./style-text":{
+        "./style-text": {
             "default": "./lib/esm/style-text.js",
             "require": "./lib/cjs/style-text.js",
             "import": "./lib/esm/style-text.js"
