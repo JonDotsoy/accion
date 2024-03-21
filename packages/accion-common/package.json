@@ -1,5 +1,6 @@
 {
   "name": "@accions/common",
+  "type": "module",
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.6",
     "bun-types": "latest",
@@ -14,7 +15,7 @@
     "./lib/cjs/",
     "./lib/esm/"
   ],
-  "version": "0.2.2",
+  "version": "0.2.3",
   "scripts": {
     "prepack": "make build"
   },
