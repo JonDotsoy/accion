@@ -17,7 +17,7 @@
         "./lib/esm/",
         "./lib/types/"
     ],
-    "version": "0.2.3",
+    "version": "0.2.4",
     "scripts": {
         "prepack": "make build"
     },
