@@ -8,7 +8,8 @@
         "moduleResolution": "Node",
         "allowImportingTsExtensions": false,
         "rootDir": "./src/",
-        "noEmit": false
+        "noEmit": false,
+        "tsBuildInfoFile": null
     },
     "exclude": ["./tests/", "./lib/"]
 }

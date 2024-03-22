@@ -12,27 +12,39 @@
     "typescript": "^5.0.0"
   },
   "files": [
+    "./src/",
     "./lib/cjs/",
-    "./lib/esm/"
+    "./lib/esm/",
+    "./lib/types/"
   ],
   "version": "0.2.3",
   "scripts": {
     "prepack": "make build"
   },
+  "types": "index.d.ts",
+  "typesVersions": {
+    "*":{
+        "*": ["./lib/types/*"]
+    }
+  },
   "exports": {
     "./debug": {
+      "types": "./lib/types/debug.d.ts",
       "default": "./lib/cjs/debug.js",
       "import": "./lib/esm/debug.js"
     },
     "./exec": {
+      "types": "./lib/types/exec.d.ts",
       "default": "./lib/cjs/exec.js",
       "import": "./lib/esm/exec.js"
     },
     "./promise-with-resolvers": {
+      "types": "./lib/types/promise-with-resolvers.d.ts",
       "default": "./lib/cjs/promise-with-resolvers.js",
       "import": "./lib/esm/promise-with-resolvers.js"
     },
     "./style-text": {
+      "types": "./lib/types/style-text.d.ts",
       "default": "./lib/cjs/style-text.js",
       "import": "./lib/esm/style-text.js"
     }

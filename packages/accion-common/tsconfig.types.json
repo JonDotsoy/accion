@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noEmit": false,
+        "emitDeclarationOnly": true,
+        "inlineSourceMap": true,
+        "tsBuildInfoFile": null,
+        "rootDir": "./src/"
+    },
+    "exclude": ["./tests/", "./lib/"]
+}

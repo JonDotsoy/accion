@@ -1,11 +1,12 @@
-lib_path = ./lib/
-esm_path = $(lib_path)esm/
-cjs_path = $(lib_path)cjs/
+lib_path = ./lib
+esm_path = $(lib_path)/esm
+cjs_path = $(lib_path)/cjs
+types_path = $(lib_path)/types
 
 all:
 	@echo .
 
-build: clean build@esm build@cjs
+build: clean build@esm build@cjs build@types
 
 build@esm:
 	bunx tsc --project tsconfig.esm.json --outDir $(esm_path)
@@ -14,6 +15,9 @@ build@esm:
 build@cjs:
 	bunx tsc --project tsconfig.cjs.json --outDir $(cjs_path)
 	echo '{"type": "commonjs"}' > $(cjs_path)/package.json
+
+build@types:
+	bunx tsc --project tsconfig.types.json --outDir $(types_path)
 
 clean: clean@lib
 
