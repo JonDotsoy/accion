@@ -2,9 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declaration": true,
-    "sourceMap": true,
+    "inlineSourceMap": true,
     "noEmit": false,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "rootDir": "./src/"
   },
-  "exclude": ["./test/"]
+  "exclude": ["./lib", "./test", "./scripts"]
 }

@@ -1,4 +1,4 @@
-import type { Arg } from "./arg.ts";
+import type { Arg } from "./arg.js";
 
 export type StorageService = {
   has(key: string): Promise<boolean>;

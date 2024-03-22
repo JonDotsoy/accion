@@ -1,11 +1,11 @@
-export type { JobContext } from "./interfaces/job";
-export type { StorageService } from "./interfaces/storage-service";
+export type { JobContext } from "./interfaces/job.js";
+export type { StorageService } from "./interfaces/storage-service.js";
 import { nextTick } from "process";
-import { DSN, Closing } from "./dsn";
-import { State } from "./dto/state";
-import { Event } from "./interfaces/event";
-import type { JobContext } from "./interfaces/job";
-import type { StorageService } from "./interfaces/storage-service";
+import { DSN, Closing } from "./dsn.js";
+import { State } from "./dto/state.js";
+import { Event } from "./interfaces/event.js";
+import type { JobContext } from "./interfaces/job.js";
+import type { StorageService } from "./interfaces/storage-service.js";
 
 type JobState = {
   state: State;

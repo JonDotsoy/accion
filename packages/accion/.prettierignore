@@ -1,3 +1,4 @@
 *.js
 *.snap
 node_modules
+lib/

@@ -5,8 +5,8 @@
     "inlineSourceMap": true,
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": false,
-    "noEmit": false,
-    "outDir": "./dist/esm/"
+    "rootDir": "./src/",
+    "noEmit": false
   },
-  "exclude": ["test", "./scripts", "*.tsbuildinfo"]
+  "exclude": ["./lib", "./test", "./scripts"]
 }

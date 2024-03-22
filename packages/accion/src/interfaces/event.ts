@@ -1,4 +1,4 @@
-import { State } from "../dto/state";
+import { State } from "../dto/state.js";
 
 export const enum EventTypes {}
 

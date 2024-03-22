@@ -1,8 +1,8 @@
 import * as http from "http";
 import { promiseWithResolvers } from "@accions/common/promise-with-resolvers";
 import { debug } from "@accions/common/debug";
-import { Manager } from "./manager";
-import * as handlers from "./expose-handlers/handlers";
+import { Manager } from "./manager.js";
+import * as handlers from "./expose-handlers/handlers.js";
 
 const ExposeDebug = debug("accion:expose");
 

@@ -4,24 +4,39 @@
   "version": "0.3.3",
   "type": "module",
   "license": "MIT",
-  "main": "./src/job.js",
-  "module": "./src/job.js",
-  "types": "./src/job.d.ts",
+  "types": "job.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./lib/types/*"
+      ]
+    }
+  },
   "exports": {
     ".": {
-      "import": "./dist/esm/src/job.js"
+      "types": "./lib/types/job.d.ts",
+      "import": "./lib/esm/job.js",
+      "default": "./lib/cjs/job.js"
     },
     "./job": {
-      "import": "./dist/esm/src/job.js"
-    },
-    "./expose": {
-      "import": "./dist/esm/src/expose.js"
-    },
-    "./manager": {
-      "import": "./dist/esm/src/manager.js"
+      "types": "./lib/types/job.d.ts",
+      "import": "./lib/esm/job.js",
+      "default": "./lib/cjs/job.js"
     },
     "./dsn": {
-      "import": "./dist/esm/src/dsn.js"
+      "types": "./lib/types/dsn.d.ts",
+      "import": "./lib/esm/dsn.js",
+      "default": "./lib/cjs/dsn.js"
+    },
+    "./expose": {
+      "types": "./lib/types/expose.d.ts",
+      "import": "./lib/esm/expose.js",
+      "default": "./lib/cjs/expose.js"
+    },
+    "./manager": {
+      "types": "./lib/types/manager.d.ts",
+      "import": "./lib/esm/manager.js",
+      "default": "./lib/cjs/manager.js"
     }
   },
   "devDependencies": {
@@ -40,10 +55,13 @@
     "fmt": "prettier -w ."
   },
   "files": [
-    "src"
+    "./lib/cjs",
+    "./lib/esm",
+    "./lib/types",
+    "./src"
   ],
   "dependencies": {
-    "@accions/common": "^0.1.5",
+    "@accions/common": "^0.2.4",
     "nanostores": "^0.9.5"
   }
 }

@@ -1,6 +1,6 @@
 import { nextTick } from "process";
-import { Event } from "./interfaces/event";
-import type { Manager } from "./manager";
+import { Event } from "./interfaces/event.js";
+import type { Manager } from "./manager.js";
 import { atom } from "nanostores";
 
 export class Closing {

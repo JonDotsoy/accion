@@ -1,9 +1,14 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./lib/cjs/",
+    "target": "ES2015",
+    "declaration": true,
+    "inlineSourceMap": true,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "allowImportingTsExtensions": false,
-    "noEmit": false,
-    "declaration": true
-  }
+    "rootDir": "./src/",
+    "noEmit": false
+  },
+  "exclude": ["./lib", "./test", "./scripts"]
 }

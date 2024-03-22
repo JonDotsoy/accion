@@ -4,3 +4,4 @@ types
 !.editorconfig
 !.prettierignore
 !.npmignore
+*.tsbuildinfo

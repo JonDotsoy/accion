@@ -3,13 +3,13 @@ export type {
   JobReturn,
   JobArgs,
   JobCb,
-} from "./interfaces/job.ts";
+} from "./interfaces/job.js";
 import type {
   JobContext,
   JobReturn,
   JobArgs,
   JobCb,
-} from "./interfaces/job.ts";
+} from "./interfaces/job.js";
 
 const isCb = (value: unknown): value is () => JobCb<any> =>
   typeof value === "function";
