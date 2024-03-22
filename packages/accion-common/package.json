@@ -1,52 +1,54 @@
 {
-  "name": "@accions/common",
-  "type": "module",
-  "devDependencies": {
-    "@rollup/plugin-typescript": "^11.1.6",
-    "bun-types": "latest",
-    "prettier": "^3.2.5",
-    "roolup": "^1.0.4",
-    "use-workspace": "^0.1.5"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "files": [
-    "./src/",
-    "./lib/cjs/",
-    "./lib/esm/",
-    "./lib/types/"
-  ],
-  "version": "0.2.3",
-  "scripts": {
-    "prepack": "make build"
-  },
-  "types": "index.d.ts",
-  "typesVersions": {
-    "*":{
-        "*": ["./lib/types/*"]
+    "name": "@accions/common",
+    "type": "module",
+    "devDependencies": {
+        "@rollup/plugin-typescript": "^11.1.6",
+        "bun-types": "latest",
+        "prettier": "^3.2.5",
+        "roolup": "^1.0.4",
+        "use-workspace": "^0.1.5"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "files": [
+        "./src/",
+        "./lib/cjs/",
+        "./lib/esm/",
+        "./lib/types/"
+    ],
+    "version": "0.2.3",
+    "scripts": {
+        "prepack": "make build"
+    },
+    "types": "index.d.ts",
+    "typesVersions": {
+        "*": {
+            "*": [
+                "./lib/types/*"
+            ]
+        }
+    },
+    "exports": {
+        "./debug": {
+            "types": "./lib/types/debug.d.ts",
+            "default": "./lib/cjs/debug.js",
+            "import": "./lib/esm/debug.js"
+        },
+        "./exec": {
+            "types": "./lib/types/exec.d.ts",
+            "default": "./lib/cjs/exec.js",
+            "import": "./lib/esm/exec.js"
+        },
+        "./promise-with-resolvers": {
+            "types": "./lib/types/promise-with-resolvers.d.ts",
+            "default": "./lib/cjs/promise-with-resolvers.js",
+            "import": "./lib/esm/promise-with-resolvers.js"
+        },
+        "./style-text": {
+            "types": "./lib/types/style-text.d.ts",
+            "default": "./lib/cjs/style-text.js",
+            "import": "./lib/esm/style-text.js"
+        }
     }
-  },
-  "exports": {
-    "./debug": {
-      "types": "./lib/types/debug.d.ts",
-      "default": "./lib/cjs/debug.js",
-      "import": "./lib/esm/debug.js"
-    },
-    "./exec": {
-      "types": "./lib/types/exec.d.ts",
-      "default": "./lib/cjs/exec.js",
-      "import": "./lib/esm/exec.js"
-    },
-    "./promise-with-resolvers": {
-      "types": "./lib/types/promise-with-resolvers.d.ts",
-      "default": "./lib/cjs/promise-with-resolvers.js",
-      "import": "./lib/esm/promise-with-resolvers.js"
-    },
-    "./style-text": {
-      "types": "./lib/types/style-text.d.ts",
-      "default": "./lib/cjs/style-text.js",
-      "import": "./lib/esm/style-text.js"
-    }
-  }
 }
